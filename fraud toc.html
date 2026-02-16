@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fraud toc</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 12px;
+        }
+
+        h1, h2 {
+            color: #123a63;
+        }
+        h3 {
+            color: #1f5a96;
+        }
+        ul {
+            margin-bottom: 20px;
+        }
+        .part {
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 2px solid #123a63;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Fraud Analytics with Python & SQL</h1>
+<h2>Table of Contents</h2>
+
+<p><i>A Production-Ready Workbook with Actuarial Depth</i></p>
+
+<!-- PART I -->
+<div class="part">
+<h2>Part I — Core Technical Foundations</h2>
+
+<h3>Chapter 1 — Python for Fraud Analysts</h3>
+<ul>
+<li>Variables and data structures</li>
+<li>Conditional logic</li>
+<li>Functions</li>
+<li>Modular scoring rules</li>
+<li>Basic transaction simulation</li>
+</ul>
+
+<h3 class="theory">Theory 1 — Fraud as a Statistical Decision System</h3>
+<ul>
+<li>Observed fraud vs latent fraud intent</li>
+<li>Signal and noise</li>
+<li>Base rate constraints</li>
+<li>Why perfect detection is impossible</li>
+</ul>
+
+<h3>Chapter 2 — NumPy and Vectorized Computation</h3>
+<ul>
+<li>Arrays vs lists</li>
+<li>Random number generation</li>
+<li>Batch scoring</li>
+<li>Efficient fraud simulation</li>
+</ul>
+
+<h3>Chapter 3 — Pandas for Transaction Data</h3>
+<ul>
+<li>DataFrames</li>
+<li>Filtering and slicing</li>
+<li>Aggregations and group-by analysis</li>
+<li>Fraud rate calculations</li>
+<li>Date-time manipulation</li>
+</ul>
+
+<h3 class="theory">Theory 2 — Rare Event Mathematics</h3>
+<ul>
+<li>Bernoulli processes</li>
+<li>Class imbalance</li>
+<li>Precision as a function of base rate</li>
+</ul>
+</div>
+
+<!-- PART II -->
+<div class="part">
+<h2>Part II — SQL for Real-World Fraud Analytics</h2>
+
+<h3>Chapter 4 — Relational Data in Banking Systems</h3>
+<ul>
+<li>Transaction tables</li>
+<li>Customer and merchant tables</li>
+<li>Primary and foreign keys</li>
+<li>Star schema intuition</li>
+</ul>
+
+<h3>Chapter 5 — Core SQL for Fraud Analysts</h3>
+<ul>
+<li>SELECT and WHERE</li>
+<li>GROUP BY and HAVING</li>
+<li>INNER and LEFT JOIN</li>
+<li>Subqueries</li>
+<li>Common Table Expressions (CTEs)</li>
+</ul>
+
+<h3>Chapter 6 — Window Functions (Critical)</h3>
+<ul>
+<li>ROW_NUMBER()</li>
+<li>SUM() OVER()</li>
+<li>COUNT() OVER()</li>
+<li>Rolling aggregates</li>
+<li>Velocity feature construction</li>
+</ul>
+
+<h3>Chapter 7 — Building Fraud Features in SQL</h3>
+<ul>
+<li>Rolling transaction counts</li>
+<li>Spend velocity</li>
+<li>Country-switch detection</li>
+<li>Tenure calculation</li>
+<li>Historical fraud rate features</li>
+</ul>
+
+<h3 class="theory">Theory 3 — Information Extraction and Feature Validity</h3>
+<ul>
+<li>Features as information summaries</li>
+<li>Predictive vs causal variables</li>
+<li>Data leakage</li>
+<li>Selection bias in monitoring systems</li>
+</ul>
+
+<h3>Chapter 8 — SQL and Python Integration</h3>
+<ul>
+<li>Pulling SQL data into Pandas</li>
+<li>Feature parity validation</li>
+<li>Reproducible data pipelines</li>
+</ul>
+</div>
+
+<!-- PART III -->
+<div class="part">
+<h2>Part III — Supervised Fraud Modeling</h2>
+
+<h3>Chapter 9 — Feature Engineering for Fraud</h3>
+<ul>
+<li>Behavioral feature design</li>
+<li>Leakage avoidance</li>
+<li>Time-aware train/test splits</li>
+<li>Production consistency</li>
+</ul>
+
+<h3>Chapter 10 — Logistic Regression</h3>
+<ul>
+<li>Odds and log-odds</li>
+<li>Maximum likelihood intuition</li>
+<li>Coefficient interpretation</li>
+<li>Marginal effects</li>
+</ul>
+
+<h3 class="theory">Theory 4 — Bayes Decision Theory</h3>
+<ul>
+<li>Likelihood ratios</li>
+<li>Optimal classification rules</li>
+<li>Thresholds as cost-based decisions</li>
+</ul>
+
+<h3>Chapter 11 — Model Evaluation Under Imbalance</h3>
+<ul>
+<li>Confusion matrix</li>
+<li>Precision and recall</li>
+<li>ROC and AUC</li>
+<li>Threshold tuning</li>
+<li>Cost-sensitive evaluation</li>
+</ul>
+
+<h3>Chapter 12 — Scorecards and Interpretability</h3>
+<ul>
+<li>Linear additive scoring</li>
+<li>Points-based systems</li>
+<li>Stability analysis</li>
+<li>Regulatory transparency</li>
+</ul>
+
+<h3 class="theory">Theory 5 — Evaluation Geometry</h3>
+<ul>
+<li>ROC invariance to base rate</li>
+<li>Precision-recall tradeoffs</li>
+<li>Why AUC does not equal profit</li>
+</ul>
+</div>
+
+<!-- PART IV -->
+<div class="part">
+<h2>Part IV — Machine Learning Systems in Fraud</h2>
+
+<h3>Chapter 13 — Decision Trees</h3>
+<ul>
+<li>Recursive partitioning</li>
+<li>Impurity metrics</li>
+<li>Overfitting considerations</li>
+</ul>
+
+<h3>Chapter 14 — Random Forests</h3>
+<ul>
+<li>Bagging</li>
+<li>Variance reduction</li>
+<li>Feature importance stability</li>
+</ul>
+
+<h3>Chapter 15 — Gradient Boosting</h3>
+<ul>
+<li>Sequential learning</li>
+<li>Regularization</li>
+<li>Hyperparameter tuning</li>
+<li>Production constraints</li>
+</ul>
+
+<h3>Chapter 16 — Model Selection and Validation</h3>
+<ul>
+<li>Cross-validation</li>
+<li>Temporal backtesting</li>
+<li>Stability over time</li>
+</ul>
+
+<h3 class="theory">Theory 6 — Bias-Variance and Model Stability</h3>
+<ul>
+<li>Generalization error</li>
+<li>Variance in low base rate settings</li>
+<li>Stability over time</li>
+</ul>
+</div>
+
+<!-- PART V -->
+<div class="part">
+<h2>Part V — Economic Decision Optimization</h2>
+
+<h3>Chapter 17 — Fraud Economics</h3>
+<ul>
+<li>Expected fraud loss</li>
+<li>Interchange revenue</li>
+<li>Customer friction cost</li>
+<li>False decline impact</li>
+</ul>
+
+<h3>Chapter 18 — Optimal Threshold Selection</h3>
+<ul>
+<li>Profit curves</li>
+<li>Utility maximization</li>
+<li>Risk appetite calibration</li>
+</ul>
+
+<h3 class="theory">Theory 7 — Frequency-Severity Decomposition & Credibility</h3>
+<ul>
+<li>Fraud frequency modeling</li>
+<li>Fraud severity modeling</li>
+<li>Aggregate loss variance</li>
+<li>Tail exposure</li>
+<li>Segment-level shrinkage (credibility theory)</li>
+<li>Bühlmann intuition</li>
+<li>Application to merchant/customer segmentation</li>
+</ul>
+
+<h3>Chapter 19 — Portfolio-Level Fraud Risk</h3>
+<ul>
+<li>Aggregate loss volatility</li>
+<li>Unexpected loss</li>
+<li>Stress testing</li>
+<li>Capital intuition</li>
+</ul>
+</div>
+
+<!-- PART VI -->
+<div class="part">
+<h2>Part VI — Adversarial and Dynamic Systems</h2>
+
+<h3>Chapter 20 — Concept Drift</h3>
+<ul>
+<li>Population drift</li>
+<li>Behavioral drift</li>
+<li>Fraudster adaptation</li>
+</ul>
+
+<h3>Chapter 21 — Monitoring and Governance</h3>
+<ul>
+<li>Population Stability Index (PSI)</li>
+<li>Drift detection</li>
+<li>Backtesting frameworks</li>
+<li>Model risk management</li>
+</ul>
+
+<h3 class="theory">Theory 8 — Fraud as an Adaptive Game</h3>
+<ul>
+<li>Strategic fraudster behavior</li>
+<li>Feedback loops</li>
+<li>Equilibrium intuition</li>
+</ul>
+
+<h3>Chapter 22 — Strategy Evolution</h3>
+<ul>
+<li>Champion/challenger testing</li>
+<li>Rule overlays</li>
+<li>Feedback loops</li>
+</ul>
+</div>
+
+<!-- PART VII -->
+<div class="part">
+<h2>Part VII — Advanced Topics</h2>
+
+<h3>Chapter 23 — Unsupervised Fraud Detection</h3>
+<ul>
+<li>Anomaly detection methods</li>
+<li>Isolation forests</li>
+<li>Limitations of unsupervised systems</li>
+</ul>
+
+<h3>Chapter 24 — Graph-Based Fraud Detection</h3>
+<ul>
+<li>Network modeling</li>
+<li>Entity resolution</li>
+<li>Connected components</li>
+<li>Graph-derived features</li>
+</ul>
+
+<h3>Chapter 25 — Real-Time Fraud Systems</h3>
+<ul>
+<li>Low-latency scoring</li>
+<li>Feature stores</li>
+<li>API architecture</li>
+<li>Operational constraints</li>
+</ul>
+</div>
+
+<!-- PART VIII -->
+<div class="part">
+<h2>Part VIII — Capstone Projects</h2>
+
+<ul>
+<li>Simulated end-to-end fraud environment</li>
+<li>SQL-based feature construction</li>
+<li>Model training and validation</li>
+<li>Profit-optimized threshold selection</li>
+<li>Adversarial drift simulation</li>
+</ul>
+</div>
+
+<!-- Appendix -->
+<div class="part">
+<h2>Appendix — Statistical Foundations of Fraud Systems</h2>
+
+<h3>A1 — Fraud as a Rare Event Problem</h3>
+<ul>
+<li>Base rate mathematics</li>
+<li>Conditional probability</li>
+<li>False positive paradox</li>
+<li>Signal versus noise</li>
+</ul>
+
+<h3>A2 — Frequency Modeling</h3>
+<ul>
+<li>Bernoulli processes</li>
+<li>Binomial modeling</li>
+<li>Poisson approximation</li>
+<li>Account-level vs transaction-level frequency</li>
+</ul>
+
+<h3>A3 — Severity Modeling</h3>
+<ul>
+<li>Loss distributions</li>
+<li>Lognormal and Gamma intuition</li>
+<li>Heavy tails</li>
+<li>Outlier behavior</li>
+</ul>
+
+<h3>A4 — Frequency-Severity Decomposition</h3>
+<ul>
+<li>Expected loss structure</li>
+<li>Compound loss models</li>
+<li>Aggregate fraud simulation</li>
+<li>Portfolio variance</li>
+</ul>
+</div>
+
+</body>
+</html>
