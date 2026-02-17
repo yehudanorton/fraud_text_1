@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>theory_1</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+           p {
+  text-align: justify;
+  margin-top: 1;
+  margin-bottom: 1;
+  orphans: 1;
+  widows: 1;
+}
+        h1, h2 {
+            color: #0f3b63;
+        }
+        h3 {
+            color: #1b5e9a;
+        }
+        ul {
+            margin-bottom: 18px;
+        }
+        .example {
+            background-color: #eef3fa;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Theory 1 — Fraud as a Statistical Decision System</h1>
+
+<h2>1. Introduction</h2>
+<p>
+In fraud analytics, every detection system is fundamentally a <b>decision system</b>. 
+The purpose of the system is not simply to classify transactions as fraudulent or legitimate, 
+but to <b>support economic and operational decisions</b>. 
+Understanding the statistical structure behind these decisions is critical for building reliable, production-ready fraud models.
+</p>
+
+<h2>2. Observed vs Latent Fraud</h2>
+<p>
+Transactions have an <b>observed label</b> (e.g., fraud confirmed by chargeback) and an <b>unobserved latent fraud intent</b>. 
+Observed labels are often incomplete or delayed. 
+This introduces <b>noise</b> and requires careful statistical reasoning.
+</p>
+
+<ul>
+<li><b>Observed label:</b> What the system sees, e.g., a flagged chargeback.</li>
+<li><b>Latent fraud:</b> The true underlying event; not all fraud is captured immediately.</li>
+<li><b>Implication:</b> Any statistical system is modeling probability of latent fraud, given observed features.</li>
+</ul>
+
+<div class="example">
+<h3>Example</h3>
+<p>
+A transaction of $1,000 is confirmed as fraudulent 2 days later. 
+The system must assign a risk score at transaction time, even though the label is delayed. 
+Understanding this latency is part of the statistical decision framework.
+</p>
+</div>
+
+<h2>3. Signal vs Noise</h2>
+<p>
+Features contain both <b>signal</b> (information predictive of fraud) and <b>noise</b> (random variation). 
+A key principle is that not every unusual transaction is fraud — high noise can produce false positives. 
+Understanding signal-to-noise ratio guides thresholding and feature selection.
+</p>
+
+<ul>
+<li>High base-rate segments: noise is relatively small; signals are clearer.</li>
+<li>Low base-rate segments: even strong signals can produce low precision.</li>
+<li>Thresholds must balance detection vs false alarms.</li>
+</ul>
+
+<div class="note">
+Note: This explains why, in low-base-rate settings, metrics like precision collapse even for excellent models.
+</div>
+
+<h2>4. Base Rate Constraints</h2>
+<p>
+Fraud is a rare event in most banking environments. 
+Typical credit card fraud rates are <b>0.1–0.5%</b> of transactions. 
+This low base rate imposes fundamental limits:
+</p>
+
+<ul>
+<li>No model can achieve high precision if the base rate is extremely low, even with perfect signal.</li>
+<li>False positives can overwhelm true positives if thresholds are not tuned.</li>
+<li>Understanding base rate is critical for realistic model evaluation and economic decision-making.</li>
+</ul>
+
+<div class="example">
+<h3>Example</h3>
+<p>
+If 1 in 1,000 transactions is fraudulent, a system that flags 20 transactions per day may capture 1 true fraud but also produce 19 false positives. 
+Without understanding base rate, this might be misinterpreted as poor model performance.
+</p>
+</div>
+
+<h2>5. Decision Rules and Thresholding</h2>
+<p>
+A statistical decision system uses probability estimates to make decisions.  
+Let <i>P(fraud|features)</i> be the estimated probability.  
+The decision rule is usually threshold-based:
+</p>
+
+<pre>
+Flag transaction if P(fraud|features) > threshold
+</pre>
+
+<ul>
+<li>The threshold should not be arbitrary — it must consider <b>expected fraud loss</b> vs <b>cost of false positives</b>.</li>
+<li>This transforms the classification problem into an <b>economic optimization problem</b>.</li>
+<li>Understanding the underlying statistics ensures thresholds are meaningful.</li>
+</ul>
+
+<h2>6. Key Takeaways</h2>
+<ul>
+<li>Fraud detection is a decision system, not just a classification task.</li>
+<li>Observed labels are imperfect; latent fraud is the true target.</li>
+<li>Low base rates impose structural limits on precision and recall.</li>
+<li>Thresholds must be tuned in the context of expected economic outcomes.</li>
+<li>Signal-to-noise ratio guides feature selection and model evaluation.</li>
+</ul>
+
+</body>
+</html>

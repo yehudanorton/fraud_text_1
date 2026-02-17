@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>theory_2</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+           p {
+  text-align: justify;
+  margin-top: 1;
+  margin-bottom: 1;
+  orphans: 1;
+  widows: 1;
+}
+        h1, h2 {
+            color: #0f3b63;
+        }
+        h3 {
+            color: #1b5e9a;
+        }
+        ul {
+            margin-bottom: 18px;
+        }
+        .example {
+            background-color: #eef3fa;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #444;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Theory 2 — Rare Event Mathematics</h1>
+
+<h2>1. Introduction</h2>
+<p>
+In fraud analytics, fraud is typically a <b>rare event</b>.  
+Rare-event mathematics provides the statistical foundation to understand model performance, sampling, and thresholding in low-base-rate environments.
+</p>
+
+<h2>2. Bernoulli Process</h2>
+<p>
+At the simplest level, each transaction can be viewed as a Bernoulli trial:
+</p>
+<ul>
+<li>Outcome = 1 if fraudulent, 0 otherwise</li>
+<li>Probability of fraud = <i>p</i> (usually very small, e.g., 0.001–0.005)</li>
+<li>Trials are assumed independent (first approximation)</li>
+</ul>
+
+<div class="example">
+<h3>Example</h3>
+<p>
+If you have 10,000 daily transactions and a fraud rate of 0.1%, then each transaction independently has a 0.001 chance of being fraudulent.
+</p>
+</div>
+
+<h2>3. Binomial Modeling</h2>
+<p>
+For a fixed number of transactions, the total number of frauds follows a <b>Binomial distribution</b>:
+</p>
+
+<pre>
+X ~ Binomial(n = number of transactions, p = fraud probability)
+</pre>
+
+<ul>
+<li>Mean = n * p</li>
+<li>Variance = n * p * (1 - p)</li>
+<li>For small p and large n, variance ≈ n * p</li>
+</ul>
+
+<div class="note">
+Note: This approximation will be important when simulating daily fraud counts.
+</div>
+
+<hr>
+
+<h2>4. Poisson Approximation</h2>
+<p>
+When the fraud probability <i>p</i> is very small and the number of transactions <i>n</i> is large, the Binomial can be approximated by a <b>Poisson distribution</b>:
+</p>
+
+<pre>
+X ~ Poisson(λ = n * p)
+</pre>
+
+<ul>
+<li>Mean and variance both equal λ</li>
+<li>Simplifies computation and simulation for large datasets</li>
+<li>Widely used in actuarial and fraud simulation contexts</li>
+</ul>
+
+<div class="example">
+<h3>Example</h3>
+<p>
+10,000 transactions per day, fraud probability 0.001 → λ = 10  
+Daily fraud counts approximately follow Poisson(λ = 10)
+</p>
+</div>
+
+<hr>
+
+<h2>5. Implications for Model Evaluation</h2>
+<ul>
+<li>Precision is highly sensitive to base rate; even a perfect classifier has low precision at very small p.</li>
+<li>Sampling strategies must consider rare-event structure to avoid biased estimates.</li>
+<li>Simulated datasets for training or testing should reflect realistic base rates.</li>
+</ul>
+
+<div class="note">
+This is why many fraud teams simulate large volumes of “synthetic” transactions to evaluate thresholds and models before production deployment.
+</div>
+
+<h2>6. Combining Rare-Event Distributions with Decision Systems</h2>
+<p>
+Connecting this to Theory 1: once we estimate P(fraud|features), we can interpret expected outcomes in terms of rare-event distributions:
+
+<pre>
+Expected daily frauds = sum(P(fraud|features))
+Variance of daily frauds ≈ sum(P(fraud|features) * (1 - P(fraud|features)))
+</pre>
+
+This allows analysts to anticipate not just the mean expected fraud but also variability — critical for thresholding and alert management.
+</p>
+
+<hr>
+
+<h2>7. Key Takeaways</h2>
+<ul>
+<li>Fraud is fundamentally a rare event: low probability, high consequence.</li>
+<li>Each transaction can be modeled as a Bernoulli trial; aggregate counts follow Binomial or Poisson distributions.</li>
+<li>Rare-event structure constrains achievable precision and recall.</li>
+<li>Simulation should account for base rate and variance to test models effectively.</li>
+<li>Linking probability estimates to expected counts allows operationally meaningful thresholds.</li>
+</ul>
+
+</body>
+</html>

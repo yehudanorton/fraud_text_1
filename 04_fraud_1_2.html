@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fraud_1_2</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+           p {
+  text-align: justify;
+  margin-top: 1;
+  margin-bottom: 1;
+  orphans: 1;
+  widows: 1;
+}
+        h1, h2 {
+            color: #0f3b63;
+        }
+        h3 {
+            color: #1b5e9a;
+        }
+        ul {
+            margin-bottom: 18px;
+        }
+        .code {
+            background-color: #f4f4f4;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: Consolas, monospace;
+        }
+        .example {
+            background-color: #eef3fa;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Chapter 2 — NumPy and Vectorized Computation</h1>
+
+<h2>1. Introduction</h2>
+<p>
+In fraud analytics, we often work with thousands or millions of transactions. 
+Python loops are too slow for large datasets.  
+NumPy allows <b>vectorized computation</b>, enabling us to perform operations on entire arrays efficiently.  
+This chapter introduces NumPy fundamentals and applies them to simulate transactions and compute fraud probabilities.
+</p>
+
+<h2>2. Installing and Importing NumPy</h2>
+<p>
+First, ensure NumPy is installed:
+</p>
+<div class="code">
+pip install numpy
+</div>
+
+<p>Then import it in Python:</p>
+<div class="code">
+import numpy as np
+</div>
+
+<hr>
+
+<h2>3. NumPy Arrays vs Python Lists</h2>
+<ul>
+<li>Python lists are flexible but slow for numerical computation</li>
+<li>NumPy arrays are <b>homogeneous</b> and support vectorized operations</li>
+<li>Vectorized operations avoid explicit loops, drastically improving speed</li>
+</ul>
+
+<div class="example">
+<h3>Example — Creating an Array</h3>
+<div class="code">
+# Create an array of 10 zeros<br>
+zeros = np.zeros(10)<br>
+# Create an array of 10 ones<br>
+ones = np.ones(10)<br>
+# Create an array from a Python list<br>
+transactions = np.array([100, 250, 300, 50])
+</div>
+</div>
+
+<hr>
+
+<h2>4. Vectorized Arithmetic</h2>
+<p>NumPy allows operations on arrays directly:</p>
+
+<div class="code">
+amounts = np.array([100, 250, 300, 50])<br>
+# Add 10 to each transaction<br>
+amounts_plus_10 = amounts + 10<br>
+# Multiply by 1.02 (2% increase)<br>
+amounts_inflated = amounts * 1.02
+</div>
+
+<div class="note">
+No loops required — each operation applies to the entire array.
+</div>
+
+<hr>
+
+<h2>5. Generating Random Numbers for Simulation</h2>
+<p>NumPy supports random number generation, essential for simulating fraud:</p>
+
+<div class="code">
+# Set random seed for reproducibility<br>
+np.random.seed(42)<br>
+# Generate 1000 transaction amounts uniformly between 10 and 1000<br>
+transaction_amounts = np.random.uniform(10, 1000, 1000)<br>
+# Generate fraud labels (1% fraud rate)<br>
+fraud_labels = np.random.binomial(n=1, p=0.01, size=1000)
+</div>
+
+<div class="example">
+<h3>Example</h3>
+<p>
+transaction_amounts contains 1000 simulated transactions.  
+fraud_labels contains 1 for fraudulent transactions and 0 otherwise, following a Bernoulli(0.01) distribution.
+</p>
+</div>
+
+<hr>
+
+<h2>6. Indexing and Boolean Masking</h2>
+<p>
+NumPy allows selecting elements based on conditions, critical for fraud feature engineering:
+</p>
+
+<div class="code">
+# Find transactions over $500<br>
+high_value = transaction_amounts[transaction_amounts > 500]<br>
+# Find transactions that are fraud<br>
+fraud_transactions = transaction_amounts[fraud_labels == 1]<br>
+# Combine conditions<br>
+high_value_fraud = transaction_amounts[(transaction_amounts > 500) & (fraud_labels == 1)]
+</div>
+
+<div class="note">
+Boolean masking allows vectorized selection, avoiding slow loops.
+</div>
+
+<hr>
+
+<h2>7. Basic Statistical Operations</h2>
+<p>
+NumPy provides fast aggregation functions:
+</p>
+
+<div class="code">
+# Average transaction amount<br>
+avg_amount = np.mean(transaction_amounts)<br>
+# Total fraud amount<br>
+total_fraud = np.sum(transaction_amounts[fraud_labels == 1])<br>
+# Standard deviation<br>
+std_amount = np.std(transaction_amounts)
+</div>
+
+<hr>
+
+<h2>8. Combining with Theory</h2>
+<p>
+Using these tools, you can now implement simulations from Theory 1 & 2:
+
+<ul>
+<li>Simulate N transactions with amounts and fraud probabilities</li>
+<li>Generate Bernoulli fraud outcomes</li>
+<li>Aggregate totals to estimate expected fraud loss and variance</li>
+<li>Experiment with thresholds and expected detection rates</li>
+</ul>
+
+<div class="example">
+<h3>Example — Simple Fraud Simulation</h3>
+<div class="code">
+np.random.seed(42)<br>
+N = 10000  # number of transactions<br>
+fraud_prob = 0.001  # base rate<br>
+amounts = np.random.uniform(10, 1000, N)<br>
+fraud_flags = np.random.binomial(n=1, p=fraud_prob, size=N)<br>
+expected_loss = np.sum(amounts * fraud_prob)<br>
+observed_loss = np.sum(amounts * fraud_flags)<br>
+print(f"Expected Loss: {expected_loss}")<br>
+print(f"Observed Loss: {observed_loss}")
+</div>
+</div>
+
+<div class="note">
+This simple vectorized simulation can scale to millions of transactions and forms the foundation for feature engineering, threshold testing, and model evaluation in subsequent chapters.
+</div>
+
+<hr>
+
+<h2>9. Key Takeaways</h2>
+<ul>
+<li>NumPy arrays enable fast, vectorized operations for large datasets.</li>
+<li>Boolean masking allows flexible filtering without loops.</li>
+<li>Random number generation is essential for simulating transactions and fraud.</li>
+<li>Vectorized simulation connects Theory 1 & 2 to practical coding.</li>
+<li>Mastering these tools prepares you for feature engineering, threshold testing, and fraud model prototyping.</li>
+</ul>
+<hr>
+
+</body>
+</html>

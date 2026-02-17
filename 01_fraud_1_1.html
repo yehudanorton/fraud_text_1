@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fraud_1_1</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+           p {
+  text-align: justify;
+  margin-top: 1;
+  margin-bottom: 1;
+  orphans: 1;
+  widows: 1;
+}
+
+        h1, h2, h3 {
+            color: #1a4a7a;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            font-family: Consolas, monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 12px;
+            overflow-x: auto;
+        }
+        .exercise {
+            background-color: #eef5ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #1a4a7a;
+        }
+        .concept {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #888;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Chapter 1 – Foundations: Python as an Analytical Instrument</h2>
+
+<hr>
+
+<h2>1.1 Why We Are Learning Python This Way</h2>
+
+<p>
+You are not learning Python as an abstract programming language.
+You are learning Python as an analytical instrument — like a statistical calculator,
+but programmable, scalable, and capable of modeling adversarial systems.
+</p>
+
+<p>
+Fraud analytics is fundamentally about:
+</p>
+
+<ul>
+    <li>Structured data</li>
+    <li>Probability and uncertainty</li>
+    <li>Classification decisions</li>
+    <li>Economic tradeoffs</li>
+    <li>Large-scale transaction streams</li>
+</ul>
+
+<p>
+Python will become your modeling language for expressing these ideas.
+</p>
+
+<p>
+In this first chapter, we focus on:
+</p>
+
+<ul>
+    <li>Basic syntax</li>
+    <li>Variables and data types</li>
+    <li>Arithmetic operations</li>
+    <li>Logical expressions</li>
+    <li>Control flow (if/else)</li>
+</ul>
+
+<p>
+Every concept will be framed in a fraud context.
+</p>
+
+<hr>
+
+<h2>1.2 Variables – Representing Transaction Attributes</h2>
+
+<p>
+A variable stores information. In fraud analytics, variables represent measurable
+properties of a transaction.
+</p>
+
+<pre>
+amount = 125.50
+country = "US"
+is_international = False
+</pre>
+
+<h3>Data Types</h3>
+
+<ul>
+    <li><code>int</code> – integers (e.g., 100 transactions)</li>
+    <li><code>float</code> – decimal numbers (e.g., $125.50)</li>
+    <li><code>str</code> – text (e.g., country codes)</li>
+    <li><code>bool</code> – True / False</li>
+</ul>
+
+<div class="exercise">
+<h3>Exercise 1.1</h3>
+<p>Create variables for the following transaction:</p>
+<ul>
+    <li>Amount: $842.19</li>
+    <li>Country: "GB"</li>
+    <li>Customer tenure: 3 years</li>
+    <li>Card present: True</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>1.3 Arithmetic – Measuring Risk Signals</h2>
+
+<p>
+Fraud models often transform raw variables.
+</p>
+
+<pre>
+amount = 200
+customer_income = 40000
+
+ratio = amount / customer_income
+print(ratio)
+</pre>
+
+<p>
+This ratio is more informative than the raw amount.
+</p>
+
+<h3>Basic Operators</h3>
+
+<ul>
+    <li><code>+</code> Addition</li>
+    <li><code>-</code> Subtraction</li>
+    <li><code>*</code> Multiplication</li>
+    <li><code>/</code> Division</li>
+    <li><code>**</code> Exponentiation</li>
+</ul>
+
+<div class="exercise">
+<h3>Exercise 1.2</h3>
+<p>
+A fraud loss is $900. The interchange revenue on the transaction was $18.
+Compute the loss-to-revenue ratio.
+</p>
+</div>
+
+<hr>
+
+<h2>1.4 Logical Expressions – Binary Decision Structure</h2>
+
+<p>
+Fraud detection systems ultimately produce binary decisions:
+approve or decline.
+</p>
+
+<pre>
+amount = 1500
+
+high_risk = amount > 1000
+print(high_risk)
+</pre>
+
+<p>
+Comparison operators:
+</p>
+
+<ul>
+    <li><code>></code></li>
+    <li><code><</code></li>
+    <li><code>>=</code></li>
+    <li><code><=</code></li>
+    <li><code>==</code> (equal)</li>
+    <li><code>!=</code> (not equal)</li>
+</ul>
+
+<h3>Combining Conditions</h3>
+
+<pre>
+amount = 1200
+is_international = True
+
+flag = amount > 1000 and is_international
+print(flag)
+</pre>
+
+<p>
+Logical operators:
+</p>
+
+<ul>
+    <li><code>and</code></li>
+    <li><code>or</code></li>
+    <li><code>not</code></li>
+</ul>
+
+<div class="concept">
+<b>Conceptual Note:</b>  
+This is the primitive form of a rule-based fraud system.
+Before machine learning, fraud detection was entirely conditional logic.
+Understanding this structure is foundational.
+</div>
+
+<div class="exercise">
+<h3>Exercise 1.3</h3>
+<p>
+Write a logical rule that flags a transaction if:
+</p>
+<ul>
+    <li>Amount > $800</li>
+    <li>Country is not "US"</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>1.5 Control Flow – Decision Logic</h2>
+
+<p>
+Now we formalize approve/decline decisions.
+</p>
+
+<pre>
+amount = 1500
+is_international = True
+
+if amount > 1000 and is_international:
+    decision = "DECLINE"
+else:
+    decision = "APPROVE"
+
+print(decision)
+</pre>
+
+<p>
+Indentation matters in Python. It defines structure.
+</p>
+
+<div class="exercise">
+<h3>Exercise 1.4</h3>
+<p>
+Add a third outcome:
+</p>
+<ul>
+    <li>If amount > 2000 → "ESCALATE"</li>
+    <li>If amount > 1000 and international → "DECLINE"</li>
+    <li>Else → "APPROVE"</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>1.6 First Fraud Scoring Prototype</h2>
+
+<p>
+Let us build a primitive scoring function.
+</p>
+
+<pre>
+score = 0
+
+amount = 1200
+is_international = True
+customer_tenure = 1
+
+if amount > 1000:
+    score += 1
+
+if is_international:
+    score += 1
+
+if customer_tenure < 2:
+    score += 1
+
+print("Risk Score:", score)
+</pre>
+
+<p>
+This is a linear additive risk model.
+It is conceptually similar to early credit bureau scorecards.
+</p>
+
+<div class="concept">
+This scoring system:
+<ul>
+    <li>Aggregates weak signals</li>
+    <li>Is transparent</li>
+    <li>Is interpretable</li>
+    <li>Is structurally linear</li>
+</ul>
+Later chapters will formalize this mathematically.
+</div>
+
+<hr>
+
+<h2>1.7 Mental Models to Internalize</h2>
+
+<ol>
+    <li>Every variable encodes information.</li>
+    <li>Every rule expresses a hypothesis about fraud behavior.</li>
+    <li>Risk scoring is structured aggregation.</li>
+    <li>Binary decisions are thresholded scores.</li>
+</ol>
+
+<hr>
+
+<h2>1.8 Chapter 1 Mastery Checklist</h2>
+
+<p>You should now be able to:</p>
+
+<ul>
+    <li>Create and manipulate variables</li>
+    <li>Perform arithmetic transformations</li>
+    <li>Write logical conditions</li>
+    <li>Implement multi-branch decision logic</li>
+    <li>Construct a primitive additive fraud score</li>
+</ul>
+<hr>
+
+</body>
+</html>

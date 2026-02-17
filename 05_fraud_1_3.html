@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>fraud_1_3</title>
+    <style>
+@page {
+    size: 5.5in 8.5in;
+    margin: 0.875in;
+}
+
+        body {
+            font-family: EB Garamond, serif;
+            max-width: 900px;
+            margin: 60px auto;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+           p {
+  text-align: justify;
+  margin-top: 1;
+  margin-bottom: 1;
+  orphans: 1;
+  widows: 1;
+}
+        h1, h2 {
+            color: #0f3b63;
+        }
+        h3 {
+            color: #1b5e9a;
+        }
+        ul {
+            margin-bottom: 18px;
+        }
+        .code {
+            background-color: #f4f4f4;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: Consolas, monospace;
+        }
+        .example {
+            background-color: #eef3fa;
+            border-left: 4px solid #0f3b63;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .note {
+            font-style: italic;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Chapter 3 — Pandas for Transaction Data</h1>
+
+<h2>1. Introduction</h2>
+<p>
+Pandas provides labeled, tabular data structures for working with transactional datasets.  
+Unlike NumPy arrays, Pandas keeps **row and column labels**, making it ideal for banking and fraud applications where features are named and relational.  
+This chapter covers the essentials of Pandas for transaction-level data.
+</p>
+
+<hr>
+
+<h2>2. Installing and Importing Pandas</h2>
+<p>
+Install Pandas if you haven’t already:
+</p>
+<div class="code">
+pip install pandas
+</div>
+<p>Import it in Python:</p>
+<div class="code">
+import pandas as pd
+</div>
+
+<hr>
+
+<h2>3. Data Structures: Series and DataFrame</h2>
+<ul>
+<li><b>Series:</b> 1-dimensional labeled array, can hold numbers, strings, or mixed types</li>
+<li><b>DataFrame:</b> 2-dimensional table with labeled rows and columns, like a spreadsheet or SQL table</li>
+</ul>
+
+<div class="example">
+<h3>Example — Creating a DataFrame</h3>
+<div class="code">
+data = {<br>
+    'transaction_id': [1, 2, 3, 4],<br>
+    'customer_id': [101, 102, 101, 103],<br>
+    'amount': [200, 500, 150, 1200],<br>
+    'fraud_flag': [0, 1, 0, 1]<br>
+}<br>
+df = pd.DataFrame(data)<br>
+print(df)
+</div>
+</div>
+
+<hr>
+
+<h2>4. Reading and Writing Data</h2>
+<ul>
+<li>Read CSV files: <code>pd.read_csv('file.csv')</code></li>
+<li>Read Excel files: <code>pd.read_excel('file.xlsx')</code></li>
+<li>Write DataFrames: <code>df.to_csv('output.csv', index=False)</code></li>
+<li>Pandas can also connect to SQL databases with <code>read_sql</code></li>
+</ul>
+
+<div class="example">
+<h3>Example — Reading a CSV</h3>
+<div class="code">
+df = pd.read_csv('transactions.csv')<br>
+print(df.head())  # first 5 rows
+</div>
+</div>
+
+<hr>
+
+<h2>5. Selecting and Indexing Data</h2>
+<ul>
+<li>Select a column: <code>df['amount']</code> or <code>df.amount</code></li>
+<li>Select multiple columns: <code>df[['customer_id', 'amount']]</code></li>
+<li>Select rows by index: <code>df.iloc[0]</code></li>
+<li>Select rows by label: <code>df.loc[0]</code></li>
+<li>Boolean indexing: <code>df[df['fraud_flag'] == 1]</code></li>
+</ul>
+
+<div class="example">
+<h3>Example — High-value fraudulent transactions</h3>
+<div class="code">
+high_value_fraud = df[(df['amount'] > 500) & (df['fraud_flag'] == 1)]<br>
+print(high_value_fraud)
+</div>
+</div>
+
+<hr>
+
+<h2>6. Aggregation and Grouping</h2>
+<p>Grouping is critical for fraud analytics — e.g., customer-level summaries:</p>
+
+<div class="code">
+# Total amount per customer<br>
+total_per_customer = df.groupby('customer_id')['amount'].sum()<br>
+print(total_per_customer)<br><br>
+
+# Count of transactions and frauds per customer<br>
+summary = df.groupby('customer_id').agg({<br>
+    'transaction_id': 'count',<br>
+    'fraud_flag': 'sum'<br>
+})<br>
+print(summary)
+</div>
+
+<div class="note">
+Aggregations like sum, mean, count, max, min are extremely common for creating fraud features.
+</div>
+
+<hr>
+
+<h2>7. Sorting and Ranking</h2>
+<ul>
+<li>Sort by column: <code>df.sort_values(by='amount', ascending=False)</code></li>
+<li>Ranking transactions: <code>df['rank'] = df['amount'].rank(method='dense', ascending=False)</code></li>
+</ul>
+
+<hr>
+
+<h2>8. Creating New Features</h2>
+<p>Feature engineering is the core of fraud detection. Examples:</p>
+
+<div class="code">
+# Amount in thousands<br>
+df['amount_k'] = df['amount'] / 1000<br>
+# Flag high-value transactions<br>
+df['high_value'] = df['amount'] > 500
+</div>
+
+<div class="example">
+<h3>Example — Customer-level velocity</h3>
+<div class="code">
+# Number of transactions per customer<br>
+df['transaction_count'] = df.groupby('customer_id')['transaction_id'].transform('count')<br>
+# Number of frauds per customer<br>
+df['fraud_count'] = df.groupby('customer_id')['fraud_flag'].transform('sum')
+</div>
+</div>
+
+<hr>
+
+<h2>9. Handling Missing Data</h2>
+<ul>
+<li>Check for missing values: <code>df.isnull().sum()</code></li>
+<li>Fill missing values: <code>df.fillna(0)</code> or <code>df['amount'].fillna(df['amount'].mean())</code></li>
+<li>Drop missing rows: <code>df.dropna()</code></li>
+</ul>
+
+<hr>
+
+<h2>10. Combining DataFrames</h2>
+<ul>
+<li>Concatenate rows: <code>pd.concat([df1, df2])</code></li>
+<li>Merge like SQL JOIN: <code>pd.merge(df1, df2, on='customer_id', how='left')</code></li>
+</ul>
+
+<div class="example">
+<h3>Example — Adding customer info</h3>
+<div class="code">
+customers = pd.DataFrame({<br>
+    'customer_id': [101, 102, 103],<br>
+    'customer_segment': ['A', 'B', 'A']<br>
+})<br>
+df = pd.merge(df, customers, on='customer_id', how='left')<br>
+print(df)
+</div>
+</div>
+
+<hr>
+
+<h2>11. Connecting to Theory</h2>
+<p>
+Using Pandas, you can now:
+
+<ul>
+<li>Simulate transaction-level data (Theory 1 & 2)</li>
+<li>Compute base-rate and aggregated fraud statistics</li>
+<li>Create features for ML models or thresholding</li>
+<li>Apply group-based measures (velocity, fraud counts, averages)</li>
+</ul>
+
+These operations form the foundation for **feature engineering and model training** in fraud analytics pipelines.
+</p>
+
+<hr>
+
+<h2>12. Key Takeaways</h2>
+<ul>
+<li>Pandas DataFrames are the central data structure for transaction analytics.</li>
+<li>Boolean indexing, groupby, and aggregation enable feature creation at customer and transaction level.</li>
+<li>Sorting, ranking, and merging mimic SQL operations and prepare for relational data pipelines.</li>
+<li>Handling missing data and creating new features are essential for robust fraud analytics models.</li>
+<li>This chapter bridges your NumPy simulations to real-world, labeled tabular data.</li>
+</ul>
+<hr>
+
+</body>
+</html>
